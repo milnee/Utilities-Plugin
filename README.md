@@ -1,7 +1,7 @@
 # Utilities Minecraft Plugin
 
 ## Overview
-Utilities is a comprehensive Spigot/Bukkit plugin that adds essential utility commands to your Minecraft server, making server management and player interaction more convenient.
+Utilities is a comprehensive Spigot/Bukkit plugin that adds essential utility commands to enhance server management and player experience.
 
 ## Features
 
@@ -9,6 +9,8 @@ Utilities is a comprehensive Spigot/Bukkit plugin that adds essential utility co
 - `/heal`: Restore player health completely
 - `/fix`: Repair the item in your hand
 - `/fixall`: Repair all items in your inventory
+- `/seen`: Check when a player was last online
+- `/feed`: Restore player hunger
 - `/ping`: Simple connection check
 
 ### Server Management
@@ -20,6 +22,7 @@ Utilities is a comprehensive Spigot/Bukkit plugin that adds essential utility co
   - Displays server version
   - Lists online players
 - `/utilreload`: Reload plugin configuration
+- `/clearlag`: Remove dropped items and clear server lag
 
 ## Installation
 
@@ -35,15 +38,18 @@ Utilities is a comprehensive Spigot/Bukkit plugin that adds essential utility co
 ## Permissions
 
 ### Player Permissions
-- `utilities.heal`: Allow healing yourself
-- `utilities.fix`: Repair items in hand
-- `utilities.fixall`: Repair all inventory items
-- `utilities.ping`: Use ping command
-- `utilities.broadcast`: Send server-wide messages
-- `utilities.serverinfo`: View server details
+- `util.heal`: Allow healing yourself
+- `util.fix`: Repair items in hand
+- `util.fixall`: Repair all inventory items
+- `util.ping`: Use ping command
+- `util.seen`: Check player last online time
+- `util.feed`: Restore hunger
+- `util.broadcast`: Send server-wide messages
+- `util.serverinfo`: View server details
 
 ### Admin Permissions
-- `utilities.reload`: Reload plugin configuration
+- `util.reload`: Reload plugin configuration
+- `util.clearlag`: Clear server entities
 
 ## Configuration
 The plugin generates a `config.yml` in the `Utilities` plugin folder. Customize settings as needed.
@@ -55,8 +61,11 @@ The plugin generates a `config.yml` in the `Utilities` plugin folder. Customize 
 - `/fix`: Repair item in hand
 - `/fixall`: Repair all inventory items
 - `/ping`: Connection check
+- `/seen <player>`: Check player's last online time
+- `/feed`: Restore hunger
 - `/broadcast`: Send messages to all players
 - `/serverinfo`: View server information
+- `/clearlag`: Remove dropped items and clear server lag
 
 ## Upcoming Features
 - More utility commands
@@ -65,7 +74,6 @@ The plugin generates a `config.yml` in the `Utilities` plugin folder. Customize 
 
 ## Support
 - Report issues on GitHub
-- Contact: singh-m21@ulster.ac.uk
 
 ## Contributing
 1. Fork the repository
@@ -77,6 +85,4 @@ The plugin generates a `config.yml` in the `Utilities` plugin folder. Customize 
 ## Author
 Millen Singh (GitHub: @milnee)
 
----
 
-*Crafted with ❤️ for Minecraft server administrators*
