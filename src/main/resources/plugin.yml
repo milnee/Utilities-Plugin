@@ -13,63 +13,28 @@ commands:
   heal:
     description: Heal yourself or another player
     usage: /heal [player]
-    permission: utilities.heal
 
   fix:
     description: Repair the item in your hand
     usage: /fix
-    permission: utilities.fix
     aliases: [repair, fixhand, fixitem]
 
   fixall:
     description: Repair all items in your inventory
     usage: /fixall
-    permission: utilities.fixall
-
-  broadcast:
-    description: Send a message to all players
-    usage: /broadcast <message>
-    permission: utilities.broadcast
-
-  serverinfo:
-    description: Display server information
-    usage: /serverinfo
-    permission: utilities.serverinfo
 
   ping:
     description: Check your connection ping
     usage: /ping
-    permission: utilities.ping
 
-permissions:
-  utilities.reload:
-    description: Allows reloading the plugin configuration
-    default: op
+  feed:
+    description: Restore your hunger
+    usage: /feed
 
-  utilities.heal:
-    description: Allows healing yourself
-    default: true
+  announce:
+    description: Send a message to all players
+    usage: /announce <message>
 
-  utilities.heal.others:
-    description: Allows healing other players
-    default: op
-
-  utilities.fix:
-    description: Allows repairing items in hand
-    default: true
-
-  utilities.fixall:
-    description: Allows repairing all items in inventory
-    default: true
-
-  utilities.broadcast:
-    description: Allows sending broadcast messages
-    default: op
-
-  utilities.serverinfo:
-    description: Allows viewing server information
-    default: true
-
-  utilities.ping:
-    description: Allows checking ping
-    default: true
+  serverinfo:
+    description: Display server information
+    usage: /serverinfo

@@ -18,7 +18,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         getCommand("heal").setExecutor(this);
         getCommand("fix").setExecutor(this);
         getCommand("fixall").setExecutor(this);
-        getCommand("broadcast").setExecutor(this);
+        getCommand("announce").setExecutor(this);
         getCommand("serverinfo").setExecutor(this);
         getCommand("ping").setExecutor(this);
     }
@@ -32,7 +32,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         // Utilreload command
         if (command.getName().equalsIgnoreCase("utilreload")) {
-            if (sender.hasPermission("utilities.reload")) {
+            if (sender.hasPermission("util.reload")) {
                 reloadConfig();
                 sender.sendMessage(ChatColor.GREEN + "Config reloaded");
                 return true;
@@ -43,7 +43,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 
         // Heal command
         if (command.getName().equalsIgnoreCase("heal")) {
-            if (sender.hasPermission("utilities.heal")) {
+            if (sender.hasPermission("util.heal")) {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     player.setHealth(player.getMaxHealth());
@@ -59,7 +59,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 
         // Fix command
         if (command.getName().equalsIgnoreCase("fix")) {
-            if (sender.hasPermission("utilities.fix")) {
+            if (sender.hasPermission("util.fix")) {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     org.bukkit.inventory.ItemStack item = player.getInventory().getItemInHand();
@@ -84,7 +84,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 
         // Fixall command
         if (command.getName().equalsIgnoreCase("fixall")) {
-            if (sender.hasPermission("utilities.fixall")) {
+            if (sender.hasPermission("util.fixall")) {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     
@@ -104,15 +104,15 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
             return true;
         }
 
-        // Broadcast command
-        if (command.getName().equalsIgnoreCase("broadcast")) {
-            if (sender.hasPermission("utilities.broadcast")) {
+        // announce command
+        if (command.getName().equalsIgnoreCase("announce")) {
+            if (sender.hasPermission("util.announce")) {
                 if (args.length > 0) {
                     String message = ChatColor.translateAlternateColorCodes('&', String.join(" ", args));
-                    getServer().broadcastMessage(ChatColor.GOLD + "[Broadcast] " + ChatColor.WHITE + message);
+                    getServer().broadcastMessage(Color.translate(message));
                     return true;
                 }
-                sender.sendMessage(ChatColor.RED + "Usage: /broadcast <message>");
+                sender.sendMessage(ChatColor.RED + "Usage: /announce <message>");
                 return true;
             }
             sender.sendMessage(ChatColor.RED + "No Permission");
@@ -121,7 +121,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
 
         // Server info command
         if (command.getName().equalsIgnoreCase("serverinfo")) {
-            if (sender.hasPermission("utilities.serverinfo")) {
+            if (sender.hasPermission("util.serverinfo")) {
                 sender.sendMessage(ChatColor.GREEN + "Server IP: " + ChatColor.WHITE + getServer().getIp());
                 sender.sendMessage(ChatColor.GREEN + "Server version: " + ChatColor.WHITE + getServer().getBukkitVersion());
                 sender.sendMessage(ChatColor.GREEN + "Players online: " + ChatColor.WHITE + getServer().getOnlinePlayers().size() + " / " + getServer().getMaxPlayers());
@@ -130,10 +130,39 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
             sender.sendMessage(ChatColor.RED + "No Permission");
             return true;
         }
-
+        // feed command
+        if (command.getName().equalsIgnoreCase("feed")) {
+            if (sender.hasPermission("util.feed")) {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender; 
+                    player.setFoodLevel(20);
+                    player.sendMessage(ChatColor.GREEN + "Your hunger has been restored");
+                    return true;
+                }
+                sender.sendMessage(ChatColor.RED + "You must be a player to use this command");
+                return true;
+            }
+            sender.sendMessage(ChatColor.RED + "No Permission");
+            return true;
+        }
+        // clearlag command
+        if (command.getName().equalsIgnoreCase("clearlag")) {
+            if (sender.hasPermission("util.clearlag")) {
+                getServer().getScheduler().runTask(this, new Runnable() {
+                    @Override
+                    public void run() {
+                        getServer().getWorlds().forEach(world -> world.getEntities().forEach(entity -> entity.remove()));
+                    }
+                });
+                sender.sendMessage(ChatColor.GREEN + "All entities removed");
+                return true;
+            }
+            sender.sendMessage(ChatColor.RED + "No Permission");
+            return true;
+        }
         // Ping command
         if (command.getName().equalsIgnoreCase("ping")) {
-            if (sender.hasPermission("utilities.ping")) {
+            if (sender.hasPermission("util.ping")) {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     player.sendMessage(ChatColor.GREEN + "Pong!");
