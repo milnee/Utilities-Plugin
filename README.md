@@ -6,14 +6,19 @@ Utilities is a comprehensive Spigot/Bukkit plugin that adds essential utility co
 ## Features
 
 ### Player Utilities
-- `/heal`: Restore player health
+- `/heal`: Restore player health completely
 - `/fix`: Repair the item in your hand
 - `/fixall`: Repair all items in your inventory
-- `/ping`: Check your connection status
+- `/ping`: Simple connection check
 
 ### Server Management
-- `/broadcast`: Send messages to all players
+- `/broadcast`: Send colorful messages to all players
+  - Supports color codes using `&` prefix
+  - Example: `/broadcast &1Blue message`
 - `/serverinfo`: Get detailed server information
+  - Shows server IP and port
+  - Displays server version
+  - Lists online players
 - `/utilreload`: Reload plugin configuration
 
 ## Installation
@@ -34,15 +39,33 @@ Utilities is a comprehensive Spigot/Bukkit plugin that adds essential utility co
 - `utilities.fix`: Repair items in hand
 - `utilities.fixall`: Repair all inventory items
 - `utilities.ping`: Use ping command
+- `utilities.broadcast`: Send server-wide messages
+- `utilities.serverinfo`: View server details
 
 ### Admin Permissions
 - `utilities.reload`: Reload plugin configuration
-- `utilities.broadcast`: Send server-wide messages
-- `utilities.serverinfo`: View server details
 
 ## Configuration
 The plugin generates a `config.yml` in the `Utilities` plugin folder. Customize settings as needed.
 
+## Commands
+
+### Player Commands
+- `/heal`: Restore full health
+- `/fix`: Repair item in hand
+- `/fixall`: Repair all inventory items
+- `/ping`: Connection check
+- `/broadcast`: Send messages to all players
+- `/serverinfo`: View server information
+
+## Upcoming Features
+- More utility commands
+- Enhanced configuration options
+- Performance improvements
+
+## Support
+- Report issues on GitHub
+- Contact: singh-m21@ulster.ac.uk
 
 ## Contributing
 1. Fork the repository
@@ -51,8 +74,9 @@ The plugin generates a `config.yml` in the `Utilities` plugin folder. Customize 
 4. Push to the branch
 5. Create a Pull Request
 
-
 ## Author
 Millen Singh (GitHub: @milnee)
 
 ---
+
+*Crafted with ❤️ for Minecraft server administrators*

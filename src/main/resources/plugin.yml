@@ -8,33 +8,86 @@ commands:
   utilreload:
     description: Reload the plugin configuration
     usage: /utilreload
-    permission: utilities.reload
+    permission: util.reload
 
   heal:
     description: Heal yourself or another player
     usage: /heal [player]
+    permission: util.heal
 
   fix:
     description: Repair the item in your hand
     usage: /fix
     aliases: [repair, fixhand, fixitem]
+    permission: util.fix
 
   fixall:
     description: Repair all items in your inventory
     usage: /fixall
-
-  ping:
-    description: Check your connection ping
-    usage: /ping
-
-  feed:
-    description: Restore your hunger
-    usage: /feed
+    permission: util.fixall
 
   announce:
     description: Send a message to all players
     usage: /announce <message>
+    permission: util.announce
 
   serverinfo:
     description: Display server information
     usage: /serverinfo
+    permission: util.serverinfo
+
+  ping:
+    description: Check your connection ping
+    usage: /ping
+    permission: util.ping
+
+  feed:
+    description: Restore your hunger
+    usage: /feed
+    permission: util.feed
+
+  clearlag:
+    description: Clear the lag
+    usage: /clearlag
+    permission: util.clearlag
+
+permissions:
+  util.reload:
+    description: Allows reloading the plugin configuration
+    default: op
+
+  util.feed:
+    description: Allows restoring hunger
+    default: op
+
+  util.clearlag:
+    description: Allows clearing the lag
+    default: op
+
+  util.heal:
+    description: Allows healing yourself
+    default: true
+
+  util.heal.others:
+    description: Allows healing other players
+    default: op
+
+  util.fix:
+    description: Allows repairing items in hand
+    default: true
+
+  util.fixall:
+    description: Allows repairing all items in inventory
+    default: true
+
+  util.announce:
+    description: Allows sending announce messages
+    default: op
+
+  util.serverinfo:
+    description: Allows viewing server information
+    default: true
+
+  utilities.ping:
+    description: Allows checking ping
+    default: true

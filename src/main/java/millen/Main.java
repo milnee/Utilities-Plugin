@@ -21,6 +21,8 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         getCommand("announce").setExecutor(this);
         getCommand("serverinfo").setExecutor(this);
         getCommand("ping").setExecutor(this);
+        getCommand("feed").setExecutor(this);
+        getCommand("clearlag").setExecutor(this);
     }
 
     @Override
@@ -104,7 +106,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
             return true;
         }
 
-        // announce command
+        // Announce command
         if (command.getName().equalsIgnoreCase("announce")) {
             if (sender.hasPermission("util.announce")) {
                 if (args.length > 0) {
@@ -122,7 +124,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
         // Server info command
         if (command.getName().equalsIgnoreCase("serverinfo")) {
             if (sender.hasPermission("util.serverinfo")) {
-                sender.sendMessage(ChatColor.GREEN + "Server IP: " + ChatColor.WHITE + getServer().getIp());
+                sender.sendMessage(ChatColor.GREEN + "Server IP: " + ChatColor.WHITE + getServer().getIp() + ":" + getServer().getPort());
                 sender.sendMessage(ChatColor.GREEN + "Server version: " + ChatColor.WHITE + getServer().getBukkitVersion());
                 sender.sendMessage(ChatColor.GREEN + "Players online: " + ChatColor.WHITE + getServer().getOnlinePlayers().size() + " / " + getServer().getMaxPlayers());
                 return true;
@@ -130,36 +132,7 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
             sender.sendMessage(ChatColor.RED + "No Permission");
             return true;
         }
-        // feed command
-        if (command.getName().equalsIgnoreCase("feed")) {
-            if (sender.hasPermission("util.feed")) {
-                if (sender instanceof Player) {
-                    Player player = (Player) sender; 
-                    player.setFoodLevel(20);
-                    player.sendMessage(ChatColor.GREEN + "Your hunger has been restored");
-                    return true;
-                }
-                sender.sendMessage(ChatColor.RED + "You must be a player to use this command");
-                return true;
-            }
-            sender.sendMessage(ChatColor.RED + "No Permission");
-            return true;
-        }
-        // clearlag command
-        if (command.getName().equalsIgnoreCase("clearlag")) {
-            if (sender.hasPermission("util.clearlag")) {
-                getServer().getScheduler().runTask(this, new Runnable() {
-                    @Override
-                    public void run() {
-                        getServer().getWorlds().forEach(world -> world.getEntities().forEach(entity -> entity.remove()));
-                    }
-                });
-                sender.sendMessage(ChatColor.GREEN + "All entities removed");
-                return true;
-            }
-            sender.sendMessage(ChatColor.RED + "No Permission");
-            return true;
-        }
+
         // Ping command
         if (command.getName().equalsIgnoreCase("ping")) {
             if (sender.hasPermission("util.ping")) {
@@ -175,6 +148,67 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
             return true;
         }
 
-        return false;
+        // Feed command
+        if (command.getName().equalsIgnoreCase("feed")) {
+            if (sender.hasPermission("util.feed")) {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    player.setFoodLevel(20);
+                    player.setSaturation(20);
+                    player.sendMessage(ChatColor.GREEN + "You have been fed");
+                    return true;
+                }
+                sender.sendMessage(ChatColor.RED + "You must be a player to use this command");
+                return true;
+            }
+            sender.sendMessage(ChatColor.RED + "No Permission");
+            return true;
+        }
+
+        // Clearlag command
+        if (command.getName().equalsIgnoreCase("clearlag")) {
+            if (sender.hasPermission("util.clearlag")) {
+                getServer().getScheduler().runTaskAsynchronously(this, () -> {
+                    final int[] itemsCleared = {0};
+                    final int[] mobsCleared = {0};
+
+                    for (org.bukkit.World world : getServer().getWorlds()) {
+                        // Clear dropped items
+                        for (org.bukkit.entity.Item item : world.getEntitiesByClass(org.bukkit.entity.Item.class)) {
+                            item.remove();
+                            itemsCleared[0]++;
+                        }
+
+                        // Clear hostile mobs
+                        for (org.bukkit.entity.Monster mob : world.getEntitiesByClass(org.bukkit.entity.Monster.class)) {
+                            // Exclude named mobs or mobs with special properties
+                            if (!mob.hasMetadata("protected")) {
+                                mob.remove();
+                                mobsCleared[0]++;
+                            }
+                        }
+
+                        // Clear other passive mobs (optional, can be configured)
+                        for (org.bukkit.entity.Animals animal : world.getEntitiesByClass(org.bukkit.entity.Animals.class)) {
+                            // Exclude named animals or special mobs
+                            if (!animal.hasMetadata("protected")) {
+                                animal.remove();
+                            }
+                        }
+                    }
+
+                    // Send message back to sender
+                    getServer().getScheduler().runTask(this, () -> {
+                        sender.sendMessage(ChatColor.GREEN + "Cleared " + itemsCleared[0] + " dropped items");
+                        sender.sendMessage(ChatColor.GREEN + "Removed " + mobsCleared[0] + " hostile mobs");
+                    });
+                });
+                return true;
+            }
+            sender.sendMessage(ChatColor.RED + "No Permission");
+            return true;
+        }
+
+        return true;
     }
 }
