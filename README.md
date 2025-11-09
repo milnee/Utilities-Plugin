@@ -67,13 +67,12 @@ The plugin generates a `config.yml` in the `Utilities` plugin folder. Customize 
 - `/serverinfo`: View server information
 - `/clearlag`: Remove dropped items and clear server lag
 
-## Upcoming Features
-- More utility commands
-- Enhanced configuration options
-- Performance improvements
+## TODO
+  - [ ] Implement comprehensive `config.yml` for plugin configuration
 
 ## Support
 - Report issues on GitHub
+- Contact: singh-m21@ulster.ac.uk
 
 ## Contributing
 1. Fork the repository
