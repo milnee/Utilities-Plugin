@@ -165,6 +165,84 @@ public class Main extends JavaPlugin implements Listener, CommandExecutor {
             return true;
         }
 
+        // seen command
+        if (command.getName().equalsIgnoreCase("seen")) {
+            if (sender.hasPermission("util.seen")) {
+                if (args.length > 0) {
+                    String playerName = args[0];
+                    Player onlinePlayer = getServer().getPlayer(playerName);
+                    
+                    // Check online player first
+                    if (onlinePlayer != null) {
+                        sender.sendMessage(ChatColor.GREEN + playerName + " is currently online");
+                        return true;
+                    }
+                    
+                    // Check offline player
+                    org.bukkit.OfflinePlayer offlinePlayer = getServer().getOfflinePlayer(playerName);
+                    if (offlinePlayer != null && offlinePlayer.hasPlayedBefore()) {
+                        long lastPlayed = offlinePlayer.getLastPlayed();
+                        long currentTime = System.currentTimeMillis();
+                        long timeDiff = currentTime - lastPlayed;
+                        
+                        // Convert milliseconds to readable format
+                        long days = timeDiff / (24 * 60 * 60 * 1000);
+                        long hours = (timeDiff % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000);
+                        long minutes = (timeDiff % (60 * 60 * 1000)) / (60 * 1000);
+                        
+                        // Build time ago string
+                        StringBuilder timeAgo = new StringBuilder();
+                        if (days > 0) timeAgo.append(days).append(days == 1 ? " day " : " days ");
+                        if (hours > 0) timeAgo.append(hours).append(hours == 1 ? " hour " : " hours ");
+                        if (minutes > 0) timeAgo.append(minutes).append(minutes == 1 ? " minute " : " minutes ");
+                        
+                        // Handle edge case of very recent play or no time passed
+                        if (timeAgo.length() == 0) {
+                            timeAgo.append("just now");
+                        } else {
+                            timeAgo.append("ago");
+                        }
+                        
+                        sender.sendMessage(ChatColor.YELLOW + playerName + " was last seen " + timeAgo.toString().trim());
+                        return true;
+                    }
+                    
+                    // Player not found
+                    sender.sendMessage(ChatColor.RED + "Player " + playerName + " not found");
+                    return true;
+                }
+                sender.sendMessage(ChatColor.RED + "Usage: /seen <player>");
+                return true;
+            }
+            sender.sendMessage(ChatColor.RED + "No Permission");
+            return true;
+        }
+        // enderchest command
+        if (command.getName().equalsIgnoreCase("enderchest")) {
+            if (sender.hasPermission("util.enderchest")) {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    player.openInventory(player.getEnderChest());
+                    return true;
+                }
+            }
+            sender.sendMessage(ChatColor.RED + "No Permission");
+            return true;
+        }
+
+        // craft command
+        if (command.getName().equalsIgnoreCase("craft")) {
+            if (sender.hasPermission("util.craft")) {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    player.openWorkbench(null, true);
+                    return true;
+                }
+            }
+            sender.sendMessage(ChatColor.RED + "No Permission");
+            return true;
+        }
+
         // Clearlag command
         if (command.getName().equalsIgnoreCase("clearlag")) {
             if (sender.hasPermission("util.clearlag")) {

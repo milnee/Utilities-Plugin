@@ -51,6 +51,22 @@ commands:
     usage: /clearlag
     permission: util.clearlag
 
+  seen:
+    description: Check when a player was last online
+    usage: /seen <player>
+    permission: util.seen
+
+  enderchest:
+    description: Open your enderchest
+    aliases: [ec]
+    usage: /enderchest
+    permission: util.enderchest
+
+  craft:
+    description: Open the crafting table
+    usage: /craft
+    permission: util.craft
+
 permissions:
   util.reload:
     description: Allows reloading the plugin configuration
@@ -66,7 +82,7 @@ permissions:
 
   util.heal:
     description: Allows healing yourself
-    default: true
+    default: op
 
   util.heal.others:
     description: Allows healing other players
@@ -74,11 +90,11 @@ permissions:
 
   util.fix:
     description: Allows repairing items in hand
-    default: true
+    default: op
 
   util.fixall:
     description: Allows repairing all items in inventory
-    default: true
+    default: op
 
   util.announce:
     description: Allows sending announce messages
@@ -86,8 +102,20 @@ permissions:
 
   util.serverinfo:
     description: Allows viewing server information
-    default: true
+    default: op
 
-  utilities.ping:
+  util.ping:
     description: Allows checking ping
-    default: true
+    default: op
+
+  util.seen:
+    description: Allows checking when a player was last online
+    default: op
+
+  util.enderchest:
+    description: Allows opening the enderchest
+    default: op
+
+  util.craft:
+    description: Allows opening the crafting table
+    default: op 
