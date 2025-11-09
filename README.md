@@ -27,8 +27,8 @@ Utilities is a comprehensive Spigot/Bukkit plugin that adds essential utility co
 ## Installation
 
 ### Requirements
-- Spigot/Bukkit Server (1.16.5 or higher)
-- Java 8+
+- Spigot/Bukkit Server (1.7.10)
+- Java 7+
 
 ### Steps
 1. Download the latest `Utilities-1.0-SNAPSHOT.jar` from the releases
